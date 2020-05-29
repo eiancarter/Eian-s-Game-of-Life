@@ -16,6 +16,18 @@ Any dead cell with three live neighbours becomes a live cell.
 All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 The initial pattern constitutes the seed of the system. The first generation is created by applying the above rules simultaneously to every cell in the seed; births and deaths occur simultaneously, and the discrete moment at which this happens is sometimes called a tick. Each generation is a pure function of the preceding one. The rules continue to be applied repeatedly to create further generations.
 
+## Running the game
+For game.py -
+In the root directory, run the game using the following command: 
+```
+python3 game.py
+```
+
+For evolutiongame.py (pygame)
+In the evolutiongame file, run the game using the following command:
+```
+python3 GameOfLife.py
+```
 ## Future Iterations
 
 My goal is to use this framework to create a more advanced pygame that models some additional
