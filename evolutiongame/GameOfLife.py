@@ -18,6 +18,7 @@ class GameOfLife:
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.clear_screen()
         pygame.display.flip()
+        pygame.display.get_num_displays
         self.max_fps = max_fps
         self.active_grid = 0
         self.num_cols = int(self.screen_width / self.cell_size)
