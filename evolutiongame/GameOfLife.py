@@ -31,6 +31,7 @@ class GameOfLife:
     
     def init_grids(self):
         ## this is O(N)
+        ## init_grids will create and store the defaults grids
         def create_grid():
             rows = []
             for row_num in range(self.num_rows):
@@ -41,6 +42,8 @@ class GameOfLife:
         self.grids.append(create_grid())
 
     def set_grid(self, value=None, grid=0):
+        ## set_grid will set the entire grid based on whether there is 
+        ## a single value entered or its left at random
         for r in range(self.num_rows):
             for c in range(self.num_cols):
                 if value is None:
@@ -50,6 +53,7 @@ class GameOfLife:
                 self.grids[grid][r][c] = cell_value
                 
     def draw_grid(self):
+        ## once the grid is set and all the cells have state, draw_grid draws them on the pygame screen
         self.clear_screen()
         for c in range(self.num_cols):
             for r in range(self.num_rows):
@@ -57,15 +61,18 @@ class GameOfLife:
                     color = self.alive_color
                 else:
                     color = self.dead_color
+                ## change circle to rect in order to alter cell type
                 pygame.draw.circle(self.screen, color, (int(c * self.cell_size + (self.cell_size / 2)),
                                                         int(r * self.cell_size + (self.cell_size / 2))),
                                                         int(self.cell_size / 2), 0)
         pygame.display.flip()
     
     def clear_screen(self):
+        ## function to make all cells dead aka clearing the screen of living cells
         self.screen.fill(self.dead_color)
     
     def get_cell(self,row_num, col_num):
+        ## get cell will check to see if a given cell is a live or dead and returns true or false
         try:
             cell_value = self.grids[self.active_grid][row_num][col_num]
         except:
@@ -73,6 +80,8 @@ class GameOfLife:
         return cell_value
     
     def check_cell_neighbors(self, row_index, col_index):
+        ## this function checks all cell neighbors to see if it lives or dies
+        ## when the next generation passes based on conways rules
         num_alive_neighbors = 0
         num_alive_neighbors += self.get_cell(row_index - 1, col_index - 1)
         num_alive_neighbors += self.get_cell(row_index - 1, col_index)
@@ -96,6 +105,7 @@ class GameOfLife:
         return self.grids[self.active_grid][row_index][col_index]
     
     def update_generation(self):
+        ## checks the current generation of cells and sets new state
         self.set_grid(0, self.inactive_grid())
         for r in range(self.num_rows - 1):
             for c in range(self.num_cols - 1):
@@ -104,9 +114,11 @@ class GameOfLife:
         self.active_grid = self.inactive_grid()
 
     def inactive_grid(self):
+        ## if active_grid from update generation is 0, inactive grid is true or 1
         return (self.active_grid + 1) % 2
 
     def handle_events(self):
+        ## these gygame methods allow users to pause, reset with random data, and quit
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 print("pressed key")
@@ -129,6 +141,7 @@ class GameOfLife:
                 sys.exit()
 
     def run(self):
+        ## game is set to run on loop until user quits
         clock = pygame.time.Clock()
         while True:
             if self.game_over:
