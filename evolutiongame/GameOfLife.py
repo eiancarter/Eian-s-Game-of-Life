@@ -3,33 +3,33 @@ import sys
 import pygame
 
 class GameOfLife:
-    def __init__(self, screen_width=600, screen_height=500, cell_size=10, alive_color=(69, 252, 3), dead_color=(255, 255, 255), max_fps=10):
+    def __init__(self, screen_width=600, screen_height=500, cell_size=10, alive_color=(69, 252, 3), dead_color=(0, 0, 0), max_fps=10):
         # this will initialize the screen size and defaults
+        """
+            cell_size == diameter of cell circle
+            max_fps == maximum frames per second so game doesn't move to quickly
+        """
         pygame.init()
         self.screen_height = screen_height
         self.screen_width = screen_width
         self.cell_size = cell_size
         self.alive_color = alive_color
         self.dead_color = dead_color
-
         self.screen = pygame.display.set_mode((self.screen_width, self.screen_height))
         self.clear_screen()
         pygame.display.flip()
-
         self.max_fps = max_fps
-
         self.active_grid = 0
         self.num_cols = int(self.screen_width / self.cell_size)
         self.num_rows = int(self.screen_height / self.cell_size)
         self.grids = []
         self.init_grids()
         self.set_grid()
-
         self.paused = False
         self.game_over = False
     
     def init_grids(self):
-        
+        ## this is O(N)
         def create_grid():
             rows = []
             for row_num in range(self.num_rows):
@@ -47,6 +47,7 @@ class GameOfLife:
                 else:
                     cell_value = value
                 self.grids[grid][r][c] = cell_value
+                
     def draw_grid(self):
         self.clear_screen()
         for c in range(self.num_cols):
